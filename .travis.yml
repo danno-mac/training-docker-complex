@@ -1,0 +1,28 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+# Build dev image
+before_install:
+  - docker build -t danno-mac/react-test -f ./client/Dockerfile.dev ./client
+
+# Run unit tests in dev image
+script:
+  - docker run -e CI=true danno-mac/react-test npm test
+
+# Dev build with unit tests succeeded so build production images
+after_success:
+  - docker build -t danno-mac/training-docker-client ./client
+  - docker build -t danno-mac/training-docker-nginx ./nginx
+  - docker build -t danno-mac/training-docker-server ./server
+  - docker build -t danno-mac/training-docker-worker ./worker
+
+  # Log into Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take the built images and push to Docker Hub
+  - docker push danno-mac/training-docker-client
+  - docker push danno-mac/training-docker-nginx
+  - docker push danno-mac/training-docker-server
+  - docker push danno-mac/training-docker-worker
