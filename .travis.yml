@@ -33,7 +33,7 @@ deploy:
   region: eu-west-2
   app: training-docker-complex
   env: TrainingDockerComplex-env
-  bucket_name: arn:aws:s3:::elasticbeanstalk-eu-west-2-370784509635
+  bucket_name: elasticbeanstalk-eu-west-2-370784509635
   bucket_path: traning-docker-complex
   on:
     branch: master
