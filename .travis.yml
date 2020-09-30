@@ -26,3 +26,15 @@ after_success:
   - docker push danielmacgregor/training-docker-nginx
   - docker push danielmacgregor/training-docker-server
   - docker push danielmacgregor/training-docker-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-2
+  app: training-docker-complex
+  env: TrainingDockerComplex-env
+  bucket_name: arn:aws:s3:::elasticbeanstalk-eu-west-2-370784509635
+  bucket_path: traning-docker-complex
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
