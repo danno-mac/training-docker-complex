@@ -28,6 +28,7 @@ after_success:
   - docker push danielmacgregor/training-docker-worker
 
 deploy:
+  edge: true
   provider: elasticbeanstalk
   region: eu-west-2
   app: training-docker-complex
